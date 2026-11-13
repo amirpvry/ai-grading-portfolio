@@ -1,0 +1,34 @@
+name: CI
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: grader
+          POSTGRES_PASSWORD: ci-only-password
+          POSTGRES_DB: grader
+        ports: ['5432:5432']
+        options: --health-cmd "pg_isready -U grader" --health-interval 5s --health-timeout 3s --health-retries 10
+      redis:
+        image: redis:7-alpine
+        ports: ['6379:6379']
+    env:
+      DATABASE_URL: postgresql://grader:ci-only-password@localhost:5432/grader
+      DJANGO_SECRET_KEY: ci-only-signing-key-not-for-deployment-12345678901234567890
+      REDIS_URL: redis://localhost:6379/0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with: {version: '0.9.11', python-version: '3.12'}
+      - run: uv sync --frozen
+      - run: uv run ruff check . && uv run ruff format --check .
+      - run: uv run python manage.py makemigrations --check --dry-run
+      - run: uv run python manage.py migrate --noinput
+      - run: uv run pytest --cov=grading --cov-report=term-missing
+      - run: uv run python scripts/smoke.py
+      - run: uv run pip-audit -r requirements.txt
