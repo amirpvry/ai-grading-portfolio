@@ -15,13 +15,13 @@ Executed in the task workspace on 2026-11-13 using Python 3.12.14 and PostgreSQL
 | Docker | Application image built successfully with hash-verified dependencies |
 | Compose | Full startup **not validated**: host VFS storage exhausted while creating app containers; project test artifacts removed and storage recovered |
 | Dependency advisories | `pip-audit -r requirements.txt`: **no known vulnerabilities found** at audit time |
-| GitHub Actions | Workflow prepared with PostgreSQL tests, live Redis smoke check, lint, migration validation and dependency audit; **not run remotely** |
+| GitHub Actions | GitHub Actions run [43480573981](https://github.com/amirpvry/ai-grading-portfolio/actions/runs/43480573981) **completed successfully**; PostgreSQL-backed tests, Redis smoke test, lint, migration checks and dependency audit passed |
 
 The first SQLite run passed 23 tests and skipped two PostgreSQL-only tests. An early PostgreSQL run passed but exposed test connection cleanup warnings, which were fixed. A later database rerun failed at setup due to host storage exhaustion, not an application assertion; storage recovery enabled the clean final run above. A first live smoke attempt collided with a platform port; the script now uses 18080 and the final run passed.
 
 ## Files and provenance
 
-This is a new local repository with fresh, focused commits and no imported parents. Only connected account/repository metadata was checked. No employer repository files, source, history, documents or contracts were opened, cloned, modified or reused. Application code and synthetic samples were authored independently in this workspace. This provenance process supports the originality statement; no automated scanner can establish legal ownership.
+This project began as a new local repository with fresh, focused commits and no imported parents; it has since been pushed to GitHub. Only connected account/repository metadata was checked. No employer repository files, source, history, documents or contracts were opened, cloned, modified or reused. Application code and synthetic samples were authored independently in this workspace. This provenance process supports the originality statement; no automated scanner can establish legal ownership.
 
 Tracked files and the full fresh Git history were inspected. No virtualenv, database, cache, private dataset, employer branding, private endpoint or actual API credential is tracked. Package URLs resolve to public PyPI hosts. The only external application API is the explicitly opt-in, fixed OpenAI endpoint. Git author uses the owner's GitHub noreply address.
 
@@ -34,7 +34,7 @@ Tracked files and the full fresh Git history were inspected. No virtualenv, data
 - No real external provider request or provider data-retention review was performed.
 - Rate limits use local process memory; no token revocation, per-user external-data consent or data-retention system exists.
 - OS/container image CVE scanning and public deployment hardening remain outstanding. Python advisory results are a point-in-time check, not a container audit.
-- No GitHub remote was created, no CI success was fabricated, and nothing was published. Authenticate and use [GITHUB_SETUP](GITHUB_SETUP.md) to create a **private** repository. Public release requires explicit owner approval and a review of these limitations.
+- The repository was subsequently pushed to [GitHub](https://github.com/amirpvry/ai-grading-portfolio) and is now public with the owner's approval. The initial GitHub Actions run completed successfully. This does **not** constitute production deployment approval or a comprehensive security certification.
 
 Resume wording supported by executed evidence:
 
